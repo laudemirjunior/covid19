@@ -1,4 +1,6 @@
 import { useState } from "react";
+import dayjs from "dayjs";
+import "./styles.scss";
 
 export const Form = () => {
   const [days, setDays] = useState(0);
@@ -23,33 +25,25 @@ export const Form = () => {
     },
   ];
 
-  const dateNow = () => {
-    let date = new Date(),
-      day = date.getDate().toString().padStart(2, "0"),
-      month = (date.getMonth() + 1).toString().padStart(2, "0"),
-      year = date.getFullYear();
-    return `${Number(day)}/${month}/${year}`;
-  };
-
   const upDown = () => {
     const twoDaysAgo = Math.round(
-      mockCases.slice(-1).reduce((pre, cur) => pre + cur.cases, 0)
+      mockCases.slice(-2).reduce((pre, cur) => pre + cur.cases, 0) / 2
     );
     const fourDaysAgo = Math.round(
-      mockCases.slice(-2, -1).reduce((pre, cur) => pre + cur.cases, 0)
+      mockCases.slice(-4, -2).reduce((pre, cur) => pre + cur.cases, 0) / 2
     );
     console.log(twoDaysAgo);
     if (twoDaysAgo > fourDaysAgo) {
-      return Math.round(twoDaysAgo * 1.015);
+      return Math.round(twoDaysAgo * 1.02);
     }
-    return Math.round(twoDaysAgo * 0.995);
+    return Math.round(twoDaysAgo * 0.98);
   };
 
   const predict = (days) => {
     const data = [];
     for (let item = 1; item <= days; item++) {
       const cases = upDown();
-      const day = dateNow();
+      var day = dayjs().add(item, "Days").format("DD/MM/YYYY");
       data.push({ cases, day });
       mockCases.push({ cases, day });
     }
@@ -57,8 +51,9 @@ export const Form = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div className="container-form">
+      <h1>Previsão de casos para os próximos dias</h1>
+      <form>
         <input
           type="number"
           value={days}
@@ -66,23 +61,34 @@ export const Form = () => {
         />
         <button
           type="submit"
-          onClick={() => {
+          onClick={(e) => {
             predict(days);
+            e.preventDefault();
           }}
         >
           Click
         </button>
-      </div>
-      <div>
+      </form>
+      <table>
+        <tr>
+          <th></th>
+          <th>Dia</th>
+          <th>Casos</th>
+        </tr>
         {prevCases.map((item, index) => {
           return (
-            <table>
-              <td>{String(item.day)}</td>
-              <td>{item.cases}</td>
-            </table>
+            <tr>
+              <td>{index}</td>
+              <td>{item.day}</td>
+              <td>
+                {item.cases.toLocaleString("pt-BR", {
+                  maximumFractionDigits: 2,
+                })}
+              </td>
+            </tr>
           );
         })}
-      </div>
+      </table>
     </div>
   );
 };

@@ -1,0 +1,42 @@
+.container-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  h1 {
+    margin-top: 25px;
+  }
+  form {
+    width: 95%;
+    margin: 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    input {
+      width: 100%;
+      height: inherit;
+      max-width: 500px;
+    }
+    button {
+      height: inherit;
+      width: 200px;
+    }
+  }
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 95%;
+  }
+
+  td,
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+}
