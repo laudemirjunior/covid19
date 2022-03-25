@@ -3,8 +3,11 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: 100%;
   h1 {
-    margin-top: 25px;
+    margin: 25px 5% 0;
+    text-align: center;
+    color: #e36ca0;
   }
   form {
     width: 95%;
@@ -12,31 +15,112 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 30px;
-    input {
+    height: 40px;
+    border-radius: 10px;
+    label {
       width: 100%;
       height: inherit;
-      max-width: 500px;
+      max-width: 200px;
+      display: flex;
+      flex-direction: column;
+      input {
+        width: 100%;
+        height: inherit;
+        max-width: 500px;
+        border: 1px solid #dddddd;
+        border-radius: 10px 0 0 10px;
+        padding-left: 10px;
+      }
+      span {
+        font-size: 14px;
+        color: red;
+        margin-top: 40px;
+        position: absolute;
+      }
     }
-    button {
-      height: inherit;
-      width: 200px;
-    }
+  }
+  button {
+    height: inherit;
+    width: 200px;
+    background-color: #e36ca0;
+    border: none;
+    font-size: 26px;
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  .complexRadius {
+    border-radius: 0 10px 10px 0;
   }
   table {
-    font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 95%;
+    margin: 50px;
+    background-color: #dddddd;
   }
-
   td,
   th {
-    border: 1px solid #dddddd;
+    border: 1px solid #121527;
     text-align: left;
-    padding: 8px;
+    padding: 10px;
   }
-
   tr:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #44b7a2;
+  }
+  .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    img {
+      width: 300px;
+      height: 300px;
+      margin: auto;
+    }
+    h2 {
+      color: white;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      font-size: 20px;
+    }
+  }
+  .graphic {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    max-width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 50px 10px;
+    button {
+      margin: 25px auto;
+      border-radius: 10px;
+    }
+    .box {
+      align-items: flex-end;
+      display: flex;
+      gap: 5px;
+      overflow-x: scroll;
+      text-align: center;
+      .bar {
+        background-color: #44b7a2;
+        min-width: 50px;
+        gap: 1px;
+        writing-mode: vertical-rl;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
   }
 }
