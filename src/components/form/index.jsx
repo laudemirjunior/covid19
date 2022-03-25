@@ -1,19 +1,22 @@
 import { useState } from "react";
 import dayjs from "dayjs";
 import "./styles.scss";
-import { mockCases } from "../../services/mockCases";
+import { Table } from "../table/index";
+import { Infos } from "../infos";
+import { mockCases, resetArray } from "../../services/mockCases";
 
 export const Form = () => {
-  const [days, setDays] = useState();
-  const [prevCases, setPrevCases] = useState([]);
-  const [error, setError] = useState("");
-  const [show, setShow] = useState(false);
-
   const worldPopulation = 8000000000;
   const vaccinated = 5000000000;
   const totalCases = 500000000;
-  let possible = worldPopulation - vaccinated - totalCases;
   const exponentialRate = 0.0121;
+  const [days, setDays] = useState(1);
+  const [prevCases, setPrevCases] = useState([]);
+  const [error, setError] = useState("");
+  const [show, setShow] = useState(false);
+  const [possible, setPossible] = useState(
+    worldPopulation - vaccinated - totalCases
+  );
 
   let infectionRate = (
     possible /
@@ -32,39 +35,45 @@ export const Form = () => {
       let newCases = Math.round(
         twoDaysAgo * (1 + Number(infectionRate) + exponentialRate)
       );
-      possible -= newCases;
+      setPossible(possible - newCases);
       return newCases;
     }
     let newCases = Math.round(
       twoDaysAgo * (1 - Number(infectionRate) - exponentialRate)
     );
-    possible -= newCases;
+    setPossible(possible - newCases);
     return newCases;
   };
 
   const predict = (days) => {
-    if (days === 0 || !days || days > 30) {
+    if (days < 1 || days > 30) {
       return setError("O valor de dias deve ser superior 0 e menor que 30");
     }
     const data = [];
     for (let item = 1; item <= days; item++) {
-      const cases = upDown();
-      var day = dayjs().add(item, "Days").format("DD/MM/YYYY");
-      data.push({ day, cases });
-      mockCases.push({ day, cases });
+      let cases = upDown();
+      let day = dayjs().add(item, "Days").format("DD/MM/YYYY");
+      let newCases = { day, cases };
+      data.push(newCases);
+      mockCases.push(newCases);
     }
     setError("");
     setPrevCases(data);
+    setDays(1);
+    resetArray();
   };
 
   return (
     <div className="container-form">
-      <h1>Previsão de casos para os próximos dias</h1>
+      <h1 data-testid="container-form">
+        Previsão de casos para os próximos dias
+      </h1>
       <form>
         <label>
           <input
-            min="1"
-            max="30"
+            data-testid="content-input"
+            min={1}
+            max={30}
             type="number"
             required
             value={days}
@@ -86,63 +95,9 @@ export const Form = () => {
       </form>
       <button onClick={() => setShow(!show)}>Gráficos</button>
       {prevCases.length !== 0 ? (
-        <>
-          <table>
-            <tr>
-              <th>Dia</th>
-              <th>Data</th>
-              <th>Casos</th>
-            </tr>
-            {prevCases.map((item, index) => {
-              return (
-                <tr>
-                  <td>{index + 1}</td>
-                  <td>{item.day}</td>
-                  <td>
-                    {item.cases.toLocaleString("pt-BR", {
-                      maximumFractionDigits: 2,
-                    })}
-                  </td>
-                </tr>
-              );
-            })}
-          </table>
-          {show && (
-            <div className="graphic">
-              <button onClick={() => setShow(!show)}>Fechar</button>
-              <div className="box">
-                {prevCases.map((item, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="bar"
-                      style={{
-                        height: `${Number(item.cases) / 10000}px`,
-                      }}
-                    >
-                      <h5>{item.day}</h5>
-                      <h3>
-                        {item.cases.toLocaleString("pt-BR", {
-                          maximumFractionDigits: 2,
-                        })}{" "}
-                        casos
-                      </h3>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </>
+        <Table prevCases={prevCases} show={show} setShow={setShow} />
       ) : (
-        <div className="info">
-          <img src={require("./../../assets/mask.png")} alt="mask" />
-          <h2>
-            Para obter um valor aproximo da taxa de contagio pra os próximos
-            dias, digite da caixa de texto acima um valor superior a 0 e um
-            valor menor ou igual a 30 para obter os dados.
-          </h2>
-        </div>
+        <Infos />
       )}
     </div>
   );
