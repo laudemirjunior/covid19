@@ -10,7 +10,7 @@ export const Form = () => {
   const vaccinated = 5000000000;
   const totalCases = 500000000;
   const exponentialRate = 0.0121;
-  const [days, setDays] = useState(1);
+  const [days, setDays] = useState(null);
   const [prevCases, setPrevCases] = useState([]);
   const [error, setError] = useState("");
   const [show, setShow] = useState(false);
@@ -59,7 +59,7 @@ export const Form = () => {
     }
     setError("");
     setPrevCases(data);
-    setDays(1);
+    setDays(null);
     resetArray();
   };
 
