@@ -10,7 +10,7 @@ export const Form = () => {
   const vaccinated = 5000000000;
   const totalCases = 500000000;
   const exponentialRate = 0.0121;
-  const [days, setDays] = useState(null);
+  const [days, setDays] = useState("");
   const [prevCases, setPrevCases] = useState([]);
   const [error, setError] = useState("");
   const [show, setShow] = useState(false);
@@ -52,21 +52,23 @@ export const Form = () => {
     const data = [];
     for (let item = 1; item <= days; item++) {
       let cases = upDown();
-      let day = dayjs().add(item, "Days").format("DD/MM/YYYY");
+      let day = dayjs()
+        .add(item - 1, "Days")
+        .format("DD/MM/YYYY");
       let newCases = { day, cases };
       data.push(newCases);
       mockCases.push(newCases);
     }
     setError("");
     setPrevCases(data);
-    setDays(null);
+    setDays("");
     resetArray();
   };
 
   return (
     <div className="container-form">
       <h1 data-testid="container-form">
-        Previsão de casos para os próximos dias
+        Previsão de casos de COVID-19 para os próximos dias
       </h1>
       <form>
         <label>

@@ -11,7 +11,7 @@ export const Table = ({ prevCases, show, setShow }) => {
         </tr>
         {prevCases.map((item, index) => {
           return (
-            <tr>
+            <tr key={index}>
               <td>{index + 1}</td>
               <td>{item.day}</td>
               <td>
@@ -40,7 +40,7 @@ export const Table = ({ prevCases, show, setShow }) => {
                   <h3>
                     {item.cases.toLocaleString("pt-BR", {
                       maximumFractionDigits: 2,
-                    })}{" "}
+                    })}
                     casos
                   </h3>
                 </div>
