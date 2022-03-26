@@ -1,15 +1,16 @@
 # covid19
 
-Iniciando o projeto com yarn
+Iniciando o projeto com yarn:
+
 Após o clone do repositório e tendo o Node e o Yarn instalados em sua maquina.
 
-Em seu diretório rode:
+No terminal do seu diretório rode:
 
 # yarn
-Execute o comando 'yarn' para baixar as dependências
+Execute o comando "yarn" em seu terminal para baixar as dependências.
 
 # yarn start
-Execute 'yarn start' para inciar o servidor para rodar em seu navegador
+Execute o comando "yarn start" em seu terminal para iniciar o servidor e assim rodar o aplicativo em seu navegador.
 
 # yarn test
-Execute 'yarn test' para rodar os testes
+Execute o comando "yarn test" em seu terminal para rodar os testes.
