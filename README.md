@@ -1,4 +1,4 @@
-#covid19
+# covid19
 
 Iniciando o projeto com yarn
 Após o clone do repositório e tendo o Node e o Yarn instalados em sua maquina.
