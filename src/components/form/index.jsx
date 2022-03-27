@@ -9,8 +9,7 @@ export const Form = () => {
   const worldPopulation = 8000000000;
   const vaccinated = 5000000000;
   const totalCases = 500000000;
-  const exponentialRate = 0.0121;
-  const [days, setDays] = useState("");
+  const [days, setDays] = useState(null);
   const [prevCases, setPrevCases] = useState([]);
   const [error, setError] = useState("");
   const [show, setShow] = useState(false);
@@ -32,15 +31,11 @@ export const Form = () => {
       mockCases.slice(-4, -2).reduce((pre, cur) => pre + cur.cases, 0) / 2
     );
     if (twoDaysAgo > fourDaysAgo) {
-      let newCases = Math.round(
-        twoDaysAgo * (1 + Number(infectionRate) + exponentialRate)
-      );
+      let newCases = Math.round(twoDaysAgo * (1 + Number(infectionRate)));
       setPossible(possible - newCases);
       return newCases;
     }
-    let newCases = Math.round(
-      twoDaysAgo * (1 - Number(infectionRate) - exponentialRate)
-    );
+    let newCases = Math.round(twoDaysAgo * (1 - Number(infectionRate)));
     setPossible(possible - newCases);
     return newCases;
   };
@@ -95,9 +90,11 @@ export const Form = () => {
           Calcular
         </button>
       </form>
-      <button onClick={() => setShow(!show)}>Gráficos</button>
       {prevCases.length !== 0 ? (
-        <Table prevCases={prevCases} show={show} setShow={setShow} />
+        <>
+          <button onClick={() => setShow(!show)}>Gráficos</button>
+          <Table prevCases={prevCases} show={show} setShow={setShow} />
+        </>
       ) : (
         <Infos />
       )}

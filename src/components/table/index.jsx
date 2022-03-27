@@ -36,13 +36,12 @@ export const Table = ({ prevCases, show, setShow }) => {
                     height: `${Number(item.cases) / 10000}px`,
                   }}
                 >
-                  <h5>{item.day}</h5>
-                  <h3>
+                  <h6>{item.day}</h6>
+                  <h5>
                     {item.cases.toLocaleString("pt-BR", {
                       maximumFractionDigits: 2,
                     })}
-                    casos
-                  </h3>
+                  </h5>
                 </div>
               );
             })}

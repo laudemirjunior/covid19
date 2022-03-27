@@ -18,7 +18,7 @@ tr:nth-child(even) {
 
 .graphic {
   @include glass();
-  max-width: 95%;
+  max-height: 95%;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -32,7 +32,7 @@ tr:nth-child(even) {
     display: flex;
     align-items: flex-end;
     gap: 5px;
-    overflow-x: auto;
+    overflow: auto;
     text-align: center;
     .bar {
       background-color: $green;
